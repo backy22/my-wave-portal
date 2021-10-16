@@ -1,3 +1,7 @@
+html {
+  background-color: #FDFDEB;
+}
+
 .mainContainer {
   display: flex;
   justify-content: center;
@@ -10,6 +14,10 @@
   flex-direction: column;
   justify-content: center;
   max-width: 600px;
+}
+
+.header-container {
+  overflow: hidden;
 }
 
 .header {
@@ -66,4 +74,75 @@ input {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.prize-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+
+.prize-img {
+  width: 8rem;
+}
+
+.message-container {
+  border-radius: 1rem;
+  background: #FFFBCB;
+  margin-top: 16px;
+  padding: 15px;
+}
+
+.address {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  margin-bottom: 3px;
+}
+
+.trophy-icon {
+  width: 20px;
+  margin-right: 5px;
+  vertical-align: bottom;
+}
+
+.timestamp {
+  color: #928d8d;
+}
+
+.message {
+  margin-top: 10px;
+}
+
+.img-container {
+  margin: 10px 0;
+}
+
+.message-img {
+  width: 100%;
+}
+
+.footer-container {
+  position: fixed;
+  background: #ffffff;
+  bottom: 0;
+  width: 100vw;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  border-top: 1px solid #ccc9c9;
+}
+
+.twitter-logo {
+  width: 35px;
+  height: 35px;
+}
+
+.footer-text {
+  font-size: 16px;
+  font-weight: bold;
 }

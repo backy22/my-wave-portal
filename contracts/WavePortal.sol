@@ -8,15 +8,18 @@ contract WavePortal {
     uint256 totalWaves;
     uint256 private seed;
 
-    event NewWave(address indexed from, uint256 timestamp, string message);
+    event NewWave(address indexed from, uint256 timestamp, string message, string imglink, bool win);
+    event NewWin(address indexed from);
 
     /*
     * struct ... custom datatype
     */
     struct Wave {
         address waver; // The address of the user who waved.
-        string message; // The message the user sent.
         uint256 timestamp; // The timestamp when the user waved.
+        string message; // The message the user sent.
+        string imglink;
+        bool win;
     }
 
     Wave[] waves; // store an array of structs
@@ -32,14 +35,14 @@ contract WavePortal {
         console.log("We have been constructed!");
     }
 
-    function wave(string memory _message) public {
+    function wave(string memory _message, string memory _imglink) public {
         /*
          * We need to make sure the current timestamp is at least 15-minutes bigger than the last timestamp we stored
          */
         require(
-            //lastWavedAt[msg.sender] + 15 minutes < block.timestamp,
-            lastWavedAt[msg.sender] + 30 seconds < block.timestamp,
-            "Wait 15m"
+            lastWavedAt[msg.sender] + 15 minutes < block.timestamp,
+            //lastWavedAt[msg.sender] + 30 seconds < block.timestamp,
+            "Wait 15mins"
         );
 
         /*
@@ -50,7 +53,8 @@ contract WavePortal {
         totalWaves += 1;
         console.log("%s has waved!", msg.sender);
 
-        waves.push(Wave(msg.sender, _message, block.timestamp));
+        bool _win = false;
+        waves.push(Wave(msg.sender, block.timestamp, _message, _imglink, _win));
 
         /*
          * Generate a Psuedo random number between 0 and 100
@@ -76,9 +80,12 @@ contract WavePortal {
             );
             (bool success, ) = (msg.sender).call{value: prizeAmount}("");
             require(success, "Failed to withdraw money from contract.");
+            _win = true;
+            waves[waves.length - 1] = Wave(msg.sender, block.timestamp, _message, _imglink, _win);
+            emit NewWin(msg.sender);
         }
 
-        emit NewWave(msg.sender, block.timestamp, _message);
+        emit NewWave(msg.sender, block.timestamp, _message, _imglink, _win);
     }
 
     function getAllWaves() public view returns (Wave[] memory) {

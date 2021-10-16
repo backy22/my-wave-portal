@@ -22,10 +22,10 @@ const main = async () => {
     waveCount = await waveContract.getTotalWaves();
     console.log(waveCount.toNumber());
   
-    let waveTxn = await waveContract.wave('A message #1');
+    let waveTxn = await waveContract.wave('A message #1', '');
     await waveTxn.wait();
 
-    let waveTxn2 = await waveContract.connect(randomPerson).wave('Second msg!');
+    let waveTxn2 = await waveContract.connect(randomPerson).wave('Second msg!', 'https://media.giphy.com/media/13CoXDiaCcCoyk/giphy.gif');
     await waveTxn2.wait();
   
     waveCount = await waveContract.getTotalWaves();
